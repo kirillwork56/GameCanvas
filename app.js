@@ -20,7 +20,7 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
 
-//Control ============================================================
+//Control panel ====================================================
 
 const keyDownHandler = (e) => {
   debugger;
@@ -69,8 +69,16 @@ const draw = (params) => {
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      alert("GAME OVER");
+      document.location.reload();
+      clearInterval(interval);
+    }
   }
 
   //Button check
@@ -91,4 +99,4 @@ const draw = (params) => {
 };
 
 //Function start ========================================================
-setInterval(draw, 10);
+let interval = setInterval(draw, 10);
